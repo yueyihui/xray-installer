@@ -1,0 +1,266 @@
+port: 7890
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: silent
+ipv6: true
+external-controller: '127.0.0.1:9090'
+mptcp: true
+tun:
+  enable: true
+  dns-hijack:
+    - 'any:53'
+  auto-route: true
+  auto-detect-interface: true
+dns:
+  enable: true
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: true
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - 'https://doh.pub/dns-query'
+    - 'https://223.5.5.5/dns-query'
+    - 'https://223.6.6.6/dns-query'
+    - 'https://dns.alidns.com/dns-query'
+  fallback:
+    - 'https://doh.dns.sb/dns-query'
+    - 'https://dns.cloudflare.com/dns-query'
+    - 'https://dns.twnic.tw/dns-query'
+    - 'tls://8.8.4.4:853'
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+unified-delay: true
+global-client-fingerprint: chrome
+proxies:
+  -
+    name: 'JP'
+    type: vless
+    server: 47.79.40.148
+    port: 443
+    uuid: b0987418-9273-4329-9653-cae1b0a72a0e
+    network: grpc
+    udp: true
+    tls: true
+    client-fingerprint: chrome
+    servername: music.apple.com
+    grpc-opts:
+      grpc-service-name: music.apple
+    reality-opts:
+      public-key: GnLfw89BTdZQh3pr9_xq24D1l4w4PrP2inEV417XaGw
+      short-id: 4993719ed2b02dda
+proxy-groups:
+  -
+    name: Proxies
+    type: select
+    proxies:
+      - 'JP'
+rules:
+  - 'DOMAIN-KEYWORD,github,Proxies'
+  - 'DOMAIN-SUFFIX,shenmi.link,Proxies'
+  - 'DOMAIN-SUFFIX,github.com,Proxies'
+  - 'DOMAIN-SUFFIX,github.io,Proxies'
+  - 'DOMAIN-SUFFIX,githubapp.com,Proxies'
+  - 'DOMAIN-SUFFIX,githubassets.com,Proxies'
+  - 'DOMAIN-SUFFIX,githubusercontent.com,Proxies'
+  - 'DOMAIN-SUFFIX,home-intl.console.aliyun.com,Proxies'
+  - 'DOMAIN,ip.skk.moe,Proxies'
+  - 'DOMAIN,ip.sb,Proxies'
+  - 'DOMAIN-SUFFIX,googleapis.cn,Proxies'
+  - 'DOMAIN-SUFFIX,t.me,Proxies'
+  - 'DOMAIN-SUFFIX,tdesktop.com,Proxies'
+  - 'DOMAIN-SUFFIX,telegra.ph,Proxies'
+  - 'DOMAIN-SUFFIX,telegram.me,Proxies'
+  - 'DOMAIN-SUFFIX,telegram.org,Proxies'
+  - 'DOMAIN-SUFFIX,telesco.pe,Proxies'
+  - 'IP-CIDR,91.108.4.0/22,Proxies,no-resolve'
+  - 'IP-CIDR,91.108.8.0/22,Proxies,no-resolve'
+  - 'IP-CIDR,91.108.12.0/22,Proxies,no-resolve'
+  - 'IP-CIDR,91.108.16.0/22,Proxies,no-resolve'
+  - 'IP-CIDR,91.108.20.0/22,Proxies,no-resolve'
+  - 'IP-CIDR,91.108.56.0/22,Proxies,no-resolve'
+  - 'IP-CIDR,149.154.160.0/20,Proxies,no-resolve'
+  - 'IP-CIDR6,2001:b28:f23d::/48,Proxies,no-resolve'
+  - 'IP-CIDR6,2001:b28:f23f::/48,Proxies,no-resolve'
+  - 'IP-CIDR6,2001:67c:4e8::/48,Proxies,no-resolve'
+  - 'DOMAIN-SUFFIX,openai.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflix.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflix.net,Proxies'
+  - 'DOMAIN-SUFFIX,nflxext.com,Proxies'
+  - 'DOMAIN-SUFFIX,nflximg.com,Proxies'
+  - 'DOMAIN-SUFFIX,nflximg.net,Proxies'
+  - 'DOMAIN-SUFFIX,nflxso.net,Proxies'
+  - 'DOMAIN-SUFFIX,nflxvideo.net,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest0.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest1.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest2.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest3.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest4.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest5.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest6.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest7.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest8.com,Proxies'
+  - 'DOMAIN-SUFFIX,netflixdnstest9.com,Proxies'
+  - 'IP-CIDR,23.246.0.0/18,Proxies,no-resolve'
+  - 'IP-CIDR,37.77.184.0/21,Proxies,no-resolve'
+  - 'IP-CIDR,45.57.0.0/17,Proxies,no-resolve'
+  - 'IP-CIDR,64.120.128.0/17,Proxies,no-resolve'
+  - 'IP-CIDR,66.197.128.0/17,Proxies,no-resolve'
+  - 'IP-CIDR,108.175.32.0/20,Proxies,no-resolve'
+  - 'IP-CIDR,192.173.64.0/18,Proxies,no-resolve'
+  - 'IP-CIDR,198.38.96.0/19,Proxies,no-resolve'
+  - 'IP-CIDR,198.45.48.0/20,Proxies,no-resolve'
+  - 'IP-CIDR,34.210.42.111/32,Proxies,no-resolve'
+  - 'IP-CIDR,52.89.124.203/32,Proxies,no-resolve'
+  - 'IP-CIDR,54.148.37.5/32,Proxies,no-resolve'
+  - 'DOMAIN-SUFFIX,facebook.com,Proxies'
+  - 'DOMAIN-SUFFIX,facebook.net,Proxies'
+  - 'DOMAIN-SUFFIX,fb.com,Proxies'
+  - 'DOMAIN-SUFFIX,fb.me,Proxies'
+  - 'DOMAIN-SUFFIX,fbaddins.com,Proxies'
+  - 'DOMAIN-SUFFIX,fbcdn.net,Proxies'
+  - 'DOMAIN-SUFFIX,fbsbx.com,Proxies'
+  - 'DOMAIN-SUFFIX,fbworkmail.com,Proxies'
+  - 'DOMAIN-SUFFIX,instagram.com,Proxies'
+  - 'DOMAIN-SUFFIX,m.me,Proxies'
+  - 'DOMAIN-SUFFIX,messenger.com,Proxies'
+  - 'DOMAIN-SUFFIX,whatsapp.com,Proxies'
+  - 'DOMAIN-SUFFIX,whatsapp.net,Proxies'
+  - 'DOMAIN-SUFFIX,appspot.com,Proxies'
+  - 'DOMAIN-SUFFIX,blogger.com,Proxies'
+  - 'DOMAIN-SUFFIX,getoutline.org,Proxies'
+  - 'DOMAIN-SUFFIX,gvt0.com,Proxies'
+  - 'DOMAIN-SUFFIX,gvt3.com,Proxies'
+  - 'DOMAIN-SUFFIX,xn--ngstr-lra8j.com,Proxies'
+  - 'DOMAIN-SUFFIX,ytimg.com,Proxies'
+  - 'DOMAIN-KEYWORD,google,Proxies'
+  - 'DOMAIN-KEYWORD,.blogspot.,Proxies'
+  - 'DOMAIN-SUFFIX,line.me,Proxies'
+  - 'DOMAIN-SUFFIX,line-apps.com,Proxies'
+  - 'DOMAIN-SUFFIX,line-scdn.net,Proxies'
+  - 'DOMAIN-SUFFIX,naver.jp,Proxies'
+  - 'IP-CIDR,103.2.30.0/23,Proxies,no-resolve'
+  - 'IP-CIDR,125.209.208.0/20,Proxies,no-resolve'
+  - 'IP-CIDR,147.92.128.0/17,Proxies,no-resolve'
+  - 'IP-CIDR,203.104.144.0/21,Proxies,no-resolve'
+  - 'DOMAIN-SUFFIX,aka.ms,Proxies'
+  - 'DOMAIN-SUFFIX,onedrive.live.com,Proxies'
+  - 'DOMAIN-SUFFIX,streaming.mediaservices.windows.net,Proxies'
+  - 'DOMAIN,assets1.xboxlive.com,Proxies'
+  - 'DOMAIN,assets2.xboxlive.com,Proxies'
+  - 'DOMAIN,az416426.vo.msecnd.net,Proxies'
+  - 'DOMAIN,az668014.vo.msecnd.net,Proxies'
+  - 'DOMAIN-SUFFIX,nyt.com,Proxies'
+  - 'DOMAIN-SUFFIX,nytchina.com,Proxies'
+  - 'DOMAIN-SUFFIX,nytcn.me,Proxies'
+  - 'DOMAIN-SUFFIX,nytco.com,Proxies'
+  - 'DOMAIN-SUFFIX,nytimes.com,Proxies'
+  - 'DOMAIN-SUFFIX,nytimg.com,Proxies'
+  - 'DOMAIN-SUFFIX,nytlog.com,Proxies'
+  - 'DOMAIN-SUFFIX,nytstyle.com,Proxies'
+  - 'DOMAIN-SUFFIX,pixiv.net,Proxies'
+  - 'DOMAIN-SUFFIX,pixiv.org,Proxies'
+  - 'DOMAIN-SUFFIX,pximg.net,Proxies'
+  - 'DOMAIN-SUFFIX,redd.it,Proxies'
+  - 'DOMAIN-SUFFIX,reddit.com,Proxies'
+  - 'DOMAIN-SUFFIX,redditmedia.com,Proxies'
+  - 'DOMAIN-SUFFIX,t.co,Proxies'
+  - 'DOMAIN-SUFFIX,twitter.com,Proxies'
+  - 'DOMAIN-SUFFIX,wikipedia.org,Proxies'
+  - 'DOMAIN-SUFFIX,archive.org,Proxies'
+  - 'DOMAIN-SUFFIX,bit.ly,Proxies'
+  - 'DOMAIN-SUFFIX,tumblr.com,Proxies'
+  - 'DOMAIN-SUFFIX,w3schools.com,Proxies'
+  - 'DOMAIN-SUFFIX,whoer.net,Proxies'
+  - 'DOMAIN-SUFFIX,wire.com,Proxies'
+  - 'DOMAIN-SUFFIX,zoom.us,Proxies'
+  - 'DOMAIN-SUFFIX,android.com,Proxies'
+  - 'DOMAIN-SUFFIX,gstatic.com,Proxies'
+  - 'DOMAIN-SUFFIX,youtu.be,Proxies'
+  - 'DOMAIN-KEYWORD,.facebook.,Proxies'
+  - 'DOMAIN,books.itunes.apple.com,Proxies'
+  - 'DOMAIN,apps.apple.com,Proxies'
+  - 'DOMAIN,itunes.apple.com,Proxies'
+  - 'DOMAIN,api-glb-sea.smoot.apple.com,Proxies'
+  - 'DOMAIN-SUFFIX,smoot.apple.com,Proxies'
+  - 'DOMAIN,lookup-api.apple.com,Proxies'
+  - 'DOMAIN,beta.music.apple.com,Proxies'
+  - 'DOMAIN-SUFFIX,bing.com,Proxies'
+  - 'DOMAIN,appleid.apple.com,Proxies'
+  - 'DOMAIN,developer.apple.com,Proxies'
+  - 'DOMAIN,www.icloud.com,Proxies'
+  - 'DOMAIN,ocsp.apple.com,Proxies'
+  - 'DOMAIN,xp.apple.com,Proxies'
+  - 'DOMAIN,cacerts.digicert.com,Proxies'
+  - 'DOMAIN,crl3.digicert.com,Proxies'
+  - 'DOMAIN,crl4.digicert.com,Proxies'
+  - 'DOMAIN,ocsp.digicert.com,Proxies'
+  - 'DOMAIN-SUFFIX,s3.amazonaws.com,Proxies'
+  - 'DOMAIN,international-gfe.download.nvidia.com,Proxies'
+  - 'DOMAIN,store-images.s-microsoft.com,Proxies'
+  - 'DOMAIN-SUFFIX,mi.com,DIRECT'
+  - 'DOMAIN-SUFFIX,mi-img.com,DIRECT'
+  - 'DOMAIN-SUFFIX,miui.com,DIRECT'
+  - 'DOMAIN-SUFFIX,miwifi.com,DIRECT'
+  - 'DOMAIN-SUFFIX,xiaomi.com,DIRECT'
+  - 'DOMAIN-SUFFIX,xiaomi.net,DIRECT'
+  - 'DOMAIN-SUFFIX,windowsupdate.microsoft.com,DIRECT'
+  - 'DOMAIN-SUFFIX,update.microsoft.com,DIRECT'
+  - 'DOMAIN-SUFFIX,windowsupdate.com,DIRECT'
+  - 'DOMAIN,download.microsoft.com,DIRECT'
+  - 'DOMAIN,wustat.windows.com,DIRECT'
+  - 'DOMAIN,ntservicepack.microsoft.com,DIRECT'
+  - 'DOMAIN-SUFFIX,163.com,DIRECT'
+  - 'DOMAIN-SUFFIX,126.com,DIRECT'
+  - 'DOMAIN-SUFFIX,126.net,DIRECT'
+  - 'DOMAIN-SUFFIX,lofter.com,DIRECT'
+  - 'DOMAIN-SUFFIX,netease.com,DIRECT'
+  - 'DOMAIN-SUFFIX,sina.com,DIRECT'
+  - 'DOMAIN-SUFFIX,weibo.com,DIRECT'
+  - 'DOMAIN-SUFFIX,weibocdn.com,DIRECT'
+  - 'DOMAIN-SUFFIX,sohu.com,DIRECT'
+  - 'DOMAIN-SUFFIX,sogou.com,DIRECT'
+  - 'DOMAIN-SUFFIX,myqcloud.com,DIRECT'
+  - 'DOMAIN-SUFFIX,qq.com,DIRECT'
+  - 'DOMAIN-SUFFIX,tencent.com,DIRECT'
+  - 'DOMAIN-SUFFIX,tencent-cloud.net,DIRECT'
+  - 'DOMAIN-SUFFIX,tenpay.com,DIRECT'
+  - 'DOMAIN-SUFFIX,wechat.com,DIRECT'
+  - 'DOMAIN-SUFFIX,wangsu.com,DIRECT'
+  - 'DOMAIN-SUFFIX,ipip.net,DIRECT'
+  - 'DOMAIN-SUFFIX,ipv6-test.com,DIRECT'
+  - 'DOMAIN-SUFFIX,test-ipv6.com,DIRECT'
+  - 'DOMAIN-SUFFIX,chaoxing.com,DIRECT'
+  - 'DOMAIN-SUFFIX,cmbchina.com,DIRECT'
+  - 'DOMAIN-SUFFIX,cmbimg.com,DIRECT'
+  - 'DOMAIN-SUFFIX,coolapk.com,DIRECT'
+  - 'DOMAIN-SUFFIX,ctrip.com,DIRECT'
+  - 'DOMAIN-SUFFIX,dji.net,DIRECT'
+  - 'DOMAIN-SUFFIX,docschina.org,DIRECT'
+  - 'DOMAIN-SUFFIX,douban.com,DIRECT'
+  - 'DOMAIN-SUFFIX,doubanio.com,DIRECT'
+  - 'DOMAIN-SUFFIX,douyu.com,DIRECT'
+  - 'DOMAIN-SUFFIX,huya.com,DIRECT'
+  - 'DOMAIN-SUFFIX,ibm.com,DIRECT'
+  - 'DOMAIN-SUFFIX,jianguoyun.com,DIRECT'
+  - 'DOMAIN-SUFFIX,jianshu.com,DIRECT'
+  - 'DOMAIN-SUFFIX,maoyan.com,DIRECT'
+  - 'DOMAIN-SUFFIX,sm.ms,DIRECT'
+  - 'DOMAIN-SUFFIX,smzdm.com,DIRECT'
+  - 'DOMAIN-SUFFIX,sspai.com,DIRECT'
+  - 'DOMAIN-SUFFIX,weidian.com,DIRECT'
+  - 'DOMAIN-SUFFIX,xiachufang.com,DIRECT'
+  - 'DOMAIN-SUFFIX,zhihu.com,DIRECT'
+  - 'DOMAIN-SUFFIX,zhihuishu.com,DIRECT'
+  - 'DOMAIN,download.jetbrains.com,DIRECT'
+  - 'DOMAIN,images-cn.ssl-images-amazon.com,DIRECT'
+  - 'GEOIP,CN,DIRECT'
+  - 'GEOIP,LAN,DIRECT'
+  - 'MATCH,Proxies'

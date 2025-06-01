@@ -1,7 +1,11 @@
 {
   "api": {
     "tag": "api",
-    "services": ["HandlerService", "LoggerService", "StatsService"]
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService"
+    ]
   },
   "stats": {},
   "policy": {
@@ -30,12 +34,12 @@
   "inbounds": [
     {
       "listen": "0.0.0.0",
-      "port": 0,
+      "port": 443,
       "protocol": "vless",
       "settings": {
         "clients": [
           {
-            "id": "",
+            "id": "b0987418-9273-4329-9653-cae1b0a72a0e",
             "flow": ""
           }
         ],
@@ -44,23 +48,29 @@
       "streamSettings": {
         "network": "grpc",
         "grpcSettings": {
-          "serviceName": "grpc"
+          "serviceName": "music.apple"
         },
         "security": "reality",
         "realitySettings": {
           "show": false,
-          "dest": "",
+          "dest": "music.apple.com:443",
           "xver": 0,
-          "maxTimeDiff": 0,
-          "minClientVer": "1.8.0",
-          "serverNames": [],
-          "privateKey": "",
-          "shortIds": []
+          "serverNames": [
+            "music.apple.com"
+          ],
+          "privateKey": "0McVxyqLHExsu-v4EIu54VbzHWJ_kNg9Rlb1maBLVko",
+          "shortIds": [
+            "4993719ed2b02dda"
+          ]
         }
       },
       "sniffing": {
         "enabled": true,
-        "destOverride": ["http", "tls"]
+        "destOverride": [
+          "http",
+          "tls",
+	  "quic"
+        ]
       }
     },
     {
@@ -73,7 +83,6 @@
       "tag": "api"
     }
   ],
-
   "outbounds": [
     {
       "protocol": "freedom",
@@ -88,22 +97,31 @@
     "domainStrategy": "IPIfNonMatch",
     "rules": [
       {
-        "inboundTag": ["api"],
+        "inboundTag": [
+          "api"
+        ],
         "outboundTag": "api",
         "type": "field"
       },
       {
-        "domain": ["Samandehi.ir"],
+        "domain": [
+          "Samandehi.ir"
+        ],
         "type": "field",
         "outboundTag": "blocked"
       },
       {
         "type": "field",
-        "ip": ["geoip:ir", "geoip:private"],
+        "ip": [
+          "geoip:ir",
+          "geoip:private"
+        ],
         "outboundTag": "blocked"
       },
       {
-        "protocol": ["bittorrent"],
+        "protocol": [
+          "bittorrent"
+        ],
         "type": "field",
         "outboundTag": "blocked"
       }

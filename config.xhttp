@@ -1,0 +1,66 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "block"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "b0987418-9273-4329-9653-cae1b0a72a0e",
+            "flow": ""
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "security": "reality",
+        "xhttpSettings": {
+          "path": "/a2b71a4e6734cb00"
+        },
+        "realitySettings": {
+          "show": false,
+          "dest": "www.apple.com:443",
+          "xver": 0,
+          "serverNames": [
+            "www.apple.com",
+            "apple.com"
+          ],
+          "privateKey": "0McVxyqLHExsu-v4EIu54VbzHWJ_kNg9Rlb1maBLVko",
+          "shortIds": [
+            "4993719ed2b02dda"
+          ]
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls", "quic"],
+        "metadataOnly": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    }
+  ]
+}

@@ -27,7 +27,6 @@ shortId=$(openssl rand -hex 8)
 # Default values
 default_port=443
 sni=music.apple.com
-email=
 
 # Menu for port configuration
 echo -e "${YELLOW}Please enter the port number you want to configure (default is $default_port):${NC}"
@@ -44,9 +43,7 @@ newJson=$(echo "$json" | jq \
     --arg uuid "$uuid" \
     --arg port "$port" \
     --arg sni "$sni" \
-    --arg email "$email" \
     '.inbounds[0].port= '"$(expr "$port")"' |
-     .inbounds[0].settings.clients[0].email = $email |
      .inbounds[0].settings.clients[0].id = $uuid |
      .inbounds[0].streamSettings.realitySettings.dest = $sni + ":443" |
      .inbounds[0].streamSettings.realitySettings.serverNames += ["'$sni'"] |
