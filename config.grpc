@@ -58,9 +58,8 @@
           "serverNames": [
             "music.apple.com"
           ],
-          "privateKey": "0McVxyqLHExsu-v4EIu54VbzHWJ_kNg9Rlb1maBLVko",
+          "privateKey": "",
           "shortIds": [
-            "4993719ed2b02dda"
           ]
         }
       },

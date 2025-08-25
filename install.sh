@@ -1,5 +1,27 @@
 #!/bin/bash
 
+PROTOCOL='xhttp'
+
+judgment_parameters() {
+  local local_install='0'
+  local temp_version='0'
+  while [[ "$#" -gt '0' ]]; do
+    case "$1" in
+    'xhttp')
+      PROTOCOL='xhttp'
+      ;;
+    'grpc')
+      PROTOCOL='grpc'
+      ;;
+    *)
+      echo "$0: unknown option -- -"
+      return 1
+      ;;
+    esac
+    shift
+  done
+}
+
 # Color definitions
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -15,7 +37,7 @@ sudo apt-get install -y jq openssl
 echo -e "${BLUE}Installing Xray...${NC}"
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 
-json=$(curl -s https://raw.githubusercontent.com/yueyihui/xray-installer/main/config.json)
+json=$(curl -s https://raw.githubusercontent.com/yueyihui/xray-installer/main/config.${PROTOCOL})
 
 keys=$(xray x25519)
 pk=$(echo "$keys" | awk '/Private key:/ {print $3}')
@@ -26,7 +48,6 @@ shortId=$(openssl rand -hex 8)
 
 # Default values
 default_port=443
-sni=music.apple.com
 
 # Menu for port configuration
 echo -e "${YELLOW}Please enter the port number you want to configure (default is $default_port):${NC}"
@@ -42,11 +63,9 @@ newJson=$(echo "$json" | jq \
     --arg pk "$pk" \
     --arg uuid "$uuid" \
     --arg port "$port" \
-    --arg sni "$sni" \
+    --arg shortId "$shortId" \
     '.inbounds[0].port= '"$(expr "$port")"' |
      .inbounds[0].settings.clients[0].id = $uuid |
-     .inbounds[0].streamSettings.realitySettings.dest = $sni + ":443" |
-     .inbounds[0].streamSettings.realitySettings.serverNames += ["'$sni'"] |
      .inbounds[0].streamSettings.realitySettings.privateKey = $pk |
      .inbounds[0].streamSettings.realitySettings.shortIds += ["'$shortId'"]')
 
@@ -57,13 +76,20 @@ echo -e "${GREEN}Configuration Complete!${NC}"
 echo -e "${BLUE}Server IP: ${NC}$serverIp"
 echo -e "${BLUE}Port: ${NC}$port"
 echo -e "${BLUE}UUID: ${NC}$uuid"
-echo -e "${BLUE}Type: ${NC}grpc"
-echo -e "${BLUE}Service Name: ${NC}grpc"
+echo -e "${BLUE}Type: ${NC}$PROTOCOL"
+
+if [ $PROTOCOL == 'xhttp' ]; then
+     echo -e "${BLUE}xhttp path: ${NC}/a2b71a4e6734cb00"
+fi
+
+if [ $PROTOCOL == 'grpc' ]; then
+     echo -e "${BLUE}Service Name: ${NC}$PROTOCOL"
+fi
+
 echo -e "${BLUE}Security: ${NC}reality"
 echo -e "${BLUE}Encryption: ${NC}none"
 echo -e "${BLUE}Public Key: ${NC}$pub"
 echo -e "${BLUE}Fingerprint: ${NC}chrome"
-echo -e "${BLUE}SNI: ${NC}$sni"
 echo -e "${BLUE}Short ID: ${NC}$shortId"
 
 exit 0
